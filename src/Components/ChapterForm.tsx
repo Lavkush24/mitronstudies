@@ -89,7 +89,7 @@ const ChapterForm: React.FC = () => {
 
   return (
     <div className="max-w-4xl mx-auto p-6 space-y-6 font-sans">
-      <h1 className="text-3xl font-bold text-gray-800">Add New Chapter</h1>
+      <h1 className="text-3xl font-bold text-white">Add New Chapter</h1>
 
       <div className="space-y-4">
         <input
@@ -171,7 +171,7 @@ const ChapterForm: React.FC = () => {
         onClick={handleSubmit}
         className="bg-purple-600 text-white px-6 py-3 rounded-lg shadow-lg hover:bg-purple-700 transition w-full text-lg"
       >
-        ✅ Submit Chapter
+        Submit Chapter
       </button>
     </div>
   );
