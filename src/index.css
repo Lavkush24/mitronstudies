@@ -4,6 +4,17 @@
 @tailwind utilities;
 
 
+@keyframes gradient-move {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradient-move 6s ease infinite;
+}
+
 :root {
   /* Font & Typography */
   font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -18,7 +29,6 @@
 
   /* Layout & spacing */
   margin: 50px 100px 0 100px; /* less margin for modern feel */
-  padding: 20px;
 
   /* Optional accent colors */
   --primary-color: #7f5af0;  /* purple neon */
@@ -78,6 +88,23 @@ a:hover {
 .animate-gradient {
   background-size: 200% 200%;
   animation: gradientShift 5s ease infinite;
+}
+
+/* For Mobile screens */
+@media (max-width: 768px) {
+  :root {
+    font-size: 14px; 
+    margin: 20px 15px 0 15px; 
+    --primary-color: #ff6b6b;
+  }
+}
+
+/*For very large screens */
+@media (min-width: 1440px) {
+  :root {
+    font-size: 18px; 
+    margin: 80px 200px 0 200px; 
+  }
 }
 
 

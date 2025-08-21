@@ -7,15 +7,13 @@ import { Profile } from "../Components/Profile";
 export function LandingPage() {
   return (
     <div className="min-h-screen bg-gradient-to-l from-blue-300 transition-all duration-700">
-      {/* Navbar */}
+
       <div className="flex justify-between items-center p-6">
         <Name name="Mitron Studies" />
         <NavBar />
       </div>
 
-      {/* Hero Section */}
       <div className="grid grid-cols-1 md:grid-cols-6 gap-8 px-10 md:px-20 py-16 items-center">
-        {/* Left Content */}
         <div className="col-span-4 space-y-6 text-center md:text-left">
           <Aboutme
             detail="Helping students navigate learning with ease."
@@ -29,13 +27,11 @@ export function LandingPage() {
           </Link>
         </div>
 
-        {/* Right Profile Image */}
         <div className="flex justify-center items-center col-span-2">
           <Profile />
         </div>
       </div>
 
-      {/* Footer / Call-to-Action */}
       <div className="flex justify-center py-56 text-white">
         <p className="text-center text-sm md:text-base">
           © 2025 Mitron Studies. Empowering students worldwide.
