@@ -1,0 +1,97 @@
+import { useParams,useNavigate, Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { BACKEND_URL } from "../config";
+
+
+interface Chapter {
+  id: number;
+  name: string;
+  details: string;
+  pdfLink: string;
+}
+
+export function SubjectDetailPage() {
+  const navigate = useNavigate();
+  const { id } = useParams();
+  const [chapters, setChapters] = useState<Chapter[]>([]);
+
+  const token = sessionStorage.getItem("token");
+
+  function addContent() {
+    if(token) {
+      return (
+        <Link
+            className="bg-gradient-to-r from-yellow-500 to-orange-400 hover:scale-105 transition-transform text-black font-semibold px-6 py-3 rounded-3xl shadow-lg" 
+            to={`/${id}/add-chapter`}
+          >
+            Add chapter
+        </Link>
+      )
+    }
+    else {
+      <div></div>
+    }
+  }
+
+  useEffect(() => {
+    async function fetchChapters() {
+      const res = await fetch(`${BACKEND_URL}/api/v1/subject/${id}`);
+      const data = await res.json();
+      setChapters(data.response.chapters);
+    }
+    fetchChapters();
+  }, [id]);
+
+  return (
+    <div className="p-8 min-h-screen bg-gradient-to-br from-[#0f1115] to-[#1a1d25]">
+      <div className="flex flex-row justify-between items-center text-4xl font-bold text-white mb-8">
+        <div className="text-5xl font-bold text-white mb-8 text-gradient bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">
+          Chapters
+        </div>
+        { addContent() }
+      </div>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        {chapters.map((ch) => (
+            <div
+              key={ch.id}
+              className="flex flex-row justify-between relative p-6 rounded-2xl backdrop-blur-md bg-white/5 border border-white/10 hover:scale-105 hover:shadow-2xl transition-all duration-300 cursor-pointer"
+            >
+              <div>  
+                <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-blue-500 to-purple-500 opacity-10 blur-3xl pointer-events-none"></div>
+
+                <h2 className="text-2xl font-bold text-gradient bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">
+                  {ch.name}
+                </h2>
+                <p className="text-gray-300 mt-2">{ch.details}</p>
+              </div>
+              <div className="flex flex-col justify-between ">
+                  <div 
+                    className="font-bold opacity-10 hover:opacity-100 hover:text-red-600"
+                    onClick={async () => {
+                      await fetch(`${BACKEND_URL}/api/v1/chapter/remove/${ch.id}`, {
+                        method: "DELETE",
+                        headers: {
+                          "Authorization": `Bearer ${token}`
+                        },
+                      })
+                      window.location.reload();
+                    }}
+                    >
+                    Delete  
+                  </div>
+                  <div
+                      className="font-bold opacity-10 hover:opacity-100 hover:text-blue-800"
+                      onClick={() => {
+                        navigate(`/${id}/${ch.name}/${ch.id}`)
+                      }}
+                  >
+                    view
+                  </div>
+                </div>
+              </div>
+        ))}
+      </div>
+    </div>
+  );
+}

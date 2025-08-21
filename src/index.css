@@ -1,0 +1,86 @@
+@import url('https://fonts.googleapis.com/css2?family=Anybody:ital,wght@0,100..900;1,100..900&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+:root {
+  /* Font & Typography */
+  font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+  font-weight: 400;
+  font-size: 16px;
+
+  /* Color scheme */
+  color-scheme: dark light;
+  color: #e0e0e0; /* soft white for text */
+  background-color: #0f1117; /* deep dark background */
+
+  /* Layout & spacing */
+  margin: 50px 100px 0 100px; /* less margin for modern feel */
+  padding: 20px;
+
+  /* Optional accent colors */
+  --primary-color: #7f5af0;  /* purple neon */
+  --secondary-color: #3abff8; /* blue neon */
+  --accent-color: #f5a623; /* yellow-orange accent */
+  --card-bg: #161b22; /* match StudyCard / PDFViewer bg */
+  --card-border: #2e344e; /* subtle border */
+  --shadow-color: rgba(127, 90, 240, 0.4); /* neon glow */
+}
+
+/* Global styles */
+body {
+  background-color: var(--card-bg);
+  color: var(--color, #e0e0e0);
+  transition: background-color 0.3s, color 0.3s;
+}
+
+/* For headings */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  color: #ffffff;
+  letter-spacing: 0.05em;
+}
+
+/* Links */
+a {
+  color: var(--primary-color);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+a:hover {
+  color: var(--secondary-color);
+}
+
+/* Cards / containers */
+.card {
+  background-color: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 16px;
+  box-shadow: 0 4px 20px var(--shadow-color);
+  padding: 1rem;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 30px var(--shadow-color);
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradientShift 5s ease infinite;
+}
+
+
+
+
+

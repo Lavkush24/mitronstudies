@@ -1,0 +1,19 @@
+[
+  {
+    "subjectName": "Political Science - Class 12",
+    "chapters": [
+      {
+        "id": 1,
+        "name": "End of Bipolarity",
+        "details": "Covers the Cold War era and how it ended in the 1990s.",
+        "pdfLink": "https://example.com/end-of-bipolarity.pdf"
+      },
+      {
+        "id": 2,
+        "name": "Contemporary South Asia",
+        "details": "Discusses political and economic developments in South Asian countries.",
+        "pdfLink": "https://example.com/contemporary-south-asia.pdf"
+      }
+    ]
+  }
+]
