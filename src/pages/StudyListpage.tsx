@@ -9,29 +9,37 @@ interface Subject {
 
 export function StudyListPage() {
   const [subjects, setSubjects] = useState<Subject[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   const token = sessionStorage.getItem("token");
 
-  function addContent() {
-    if(token) {
+  function AddContent() {
+    if (token) {
       return (
         <Link
-          to={`/addmaterial`}
+          to="/addmaterial"
           className="bg-gradient-to-r from-yellow-500 to-orange-400 hover:scale-105 transition-transform text-black font-semibold px-6 py-3 rounded-3xl shadow-lg"
         >
           Add New Material
         </Link>
-      )
-    }else{
-      return <div></div>
+      );
     }
+    return null;
   }
 
   useEffect(() => {
     async function fetchSubjects() {
-      const res = await fetch(`${BACKEND_URL}/api/v1/subject/all`);
-      const data = await res.json();
-      setSubjects(data.response);
+      try {
+        const res = await fetch(`${BACKEND_URL}/api/v1/subject/all`);
+        if (!res.ok) throw new Error("Failed to fetch subjects");
+        const data = await res.json();
+        setSubjects(data.response || []);
+      } catch (err: any) {
+        setError(err.message || "Something went wrong");
+      } finally {
+        setLoading(false);
+      }
     }
     fetchSubjects();
   }, []);
@@ -41,25 +49,29 @@ export function StudyListPage() {
       {/* Header */}
       <div className="flex flex-row justify-between items-center text-4xl font-bold text-white mb-8">
         <div>All Study Subjects</div>
-        { addContent() }
+        <AddContent />
       </div>
+
+      {/* Loading/Error */}
+      {loading && <p className="text-gray-400">Loading subjects...</p>}
+      {error && <p className="text-red-400">{error}</p>}
 
       {/* Subject Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-        {subjects.map((subject) => (
-          <Link key={subject.id} to={`/study/${subject.id}`}>
-            <div className="relative p-6 rounded-2xl backdrop-blur-md bg-white/5 border border-white/10 hover:scale-105 hover:shadow-2xl transition-all duration-300 cursor-pointer">
-              {/* Neon glow effect */}
-              <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-blue-500 to-purple-500 opacity-10 blur-3xl pointer-events-none"></div>
-
-              <h2 className="text-2xl font-bold text-gradient bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">
-                {subject.name}
-              </h2>
-              <p className="text-gray-300 mt-2">Click to view chapters →</p>
-            </div>
-          </Link>
-        ))}
-      </div>
+      {!loading && !error && (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          {subjects.map((subject) => (
+            <Link key={subject.id} to={`/study/${subject.id}`}>
+              <div className="relative p-6 rounded-2xl backdrop-blur-md bg-white/5 border border-white/10 hover:scale-105 hover:shadow-2xl transition-all duration-300 cursor-pointer">
+                <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-blue-500 to-purple-500 opacity-10 blur-3xl pointer-events-none"></div>
+                <h2 className="text-2xl font-bold text-gradient bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">
+                  {subject.name}
+                </h2>
+                <p className="text-gray-300 mt-2">Click to view chapters →</p>
+              </div>
+            </Link>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

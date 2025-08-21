@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { BACKEND_URL } from "../config";
 
 interface LoginFormData {
@@ -11,9 +12,10 @@ export const AdminLogin: React.FC = () => {
     name: "",
     password: "",
   });
-
   const [error, setError] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
+
+  const navigate = useNavigate();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
@@ -28,18 +30,15 @@ export const AdminLogin: React.FC = () => {
     setLoading(true);
 
     if (!formData.name || !formData.password) {
-      setError("Please enter both email and password.");
+      setError("Please enter both name and password.");
       setLoading(false);
       return;
     }
 
-
     try {
       const response = await fetch(`${BACKEND_URL}/admin/login`, {
         method: "POST",
-        headers: { 
-            "Content-Type": "application/json",
-         },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
 
@@ -48,10 +47,9 @@ export const AdminLogin: React.FC = () => {
       }
 
       const data = await response.json();
-      console.log("Login successful:", data);
-      // Save token & redirect
       sessionStorage.setItem("token", data.token);
-      window.location.href = "/"
+
+      navigate("/"); //Smooth redirect to home page
     } catch (err) {
       setError((err as Error).message);
     } finally {
@@ -60,33 +58,33 @@ export const AdminLogin: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center ">
-      <div className="max-w-xl mx-auto mt-10 bg-[#161B22] p-6 rounded-xl shadow-lg border border-gray-700">
-        <h2 className="text-2xl font-bold mb-6 text-center">Admin Login</h2>
+    <div className="min-h-screen flex items-center justify-center">
+      <div className="w-full max-w-md bg-[#161B22] p-6 rounded-xl shadow-lg border border-gray-700">
+        <h2 className="text-2xl font-bold mb-6 text-center text-white">Admin Login</h2>
 
         {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-sm font-medium mb-1">Name</label>
+            <label className="block text-sm font-medium mb-1 text-gray-200">Name</label>
             <input
-              type="name"
+              type="text"
               name="name"
               value={formData.name}
               onChange={handleChange}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring focus:border-blue-500"
+              className="w-full border border-gray-600 bg-transparent text-white rounded-lg px-3 py-2 focus:outline-none focus:ring focus:border-blue-500"
               placeholder="admin"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-1">Password</label>
+            <label className="block text-sm font-medium mb-1 text-gray-200">Password</label>
             <input
               type="password"
               name="password"
               value={formData.password}
               onChange={handleChange}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring focus:border-blue-500"
+              className="w-full border border-gray-600 bg-transparent text-white rounded-lg px-3 py-2 focus:outline-none focus:ring focus:border-blue-500"
               placeholder="••••••••"
             />
           </div>

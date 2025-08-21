@@ -18,8 +18,6 @@ interface ChapterData {
 const ChapterForm: React.FC = () => {
   const navigate = useNavigate();
   const { subjectId } = useParams();
-  
-  console.log(subjectId);
 
   const [chapter, setChapter] = useState<ChapterData>({
     name: "",
@@ -29,7 +27,6 @@ const ChapterForm: React.FC = () => {
     blogs: [],
   });
 
-  // If subjectId in URL changes, update state
   useEffect(() => {
     if (subjectId) {
       setChapter((prev) => ({ ...prev, subjectId: Number(subjectId) }));
@@ -75,8 +72,8 @@ const ChapterForm: React.FC = () => {
       const res = await fetch(`${BACKEND_URL}/api/v1/chapter/addchapter`, {
         method: "POST",
         headers: { 
-          "Content-Type": "application/json" ,
-          "Authorization": `Bearer ${token}`
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(chapter),
       });
@@ -86,32 +83,32 @@ const ChapterForm: React.FC = () => {
       navigate("/study");
       return data;
     } catch (error) {
-        return error;
+      return error;
     }
   };
 
   return (
     <div className="max-w-4xl mx-auto p-6 space-y-6 font-sans">
-      <h1 className="text-3xl font-bold text-white-800">Add New Chapter</h1>
+      <h1 className="text-3xl font-bold text-gray-800">Add New Chapter</h1>
 
       <div className="space-y-4">
         <input
           type="text"
           placeholder="Chapter Name"
-          className="w-full p-3 rounded-lg shadow-sm border border-gray-300 focus:ring-2 focus:ring-blue-400"
+          className="w-full p-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500"
           value={chapter.name}
           onChange={(e) => setChapter({ ...chapter, name: e.target.value })}
         />
         <textarea
           placeholder="Chapter Details"
-          className="w-full p-3 rounded-lg shadow-sm border border-gray-300 focus:ring-2 focus:ring-blue-400"
+          className="w-full p-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500"
           value={chapter.details}
           onChange={(e) => setChapter({ ...chapter, details: e.target.value })}
         />
         <input
           type="text"
           placeholder="PDF Link"
-          className="w-full p-3 rounded-lg shadow-sm border border-gray-300 focus:ring-2 focus:ring-blue-400"
+          className="w-full p-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500"
           value={chapter.pdfLink}
           onChange={(e) => setChapter({ ...chapter, pdfLink: e.target.value })}
         />
@@ -119,32 +116,39 @@ const ChapterForm: React.FC = () => {
 
       <button
         onClick={addBlog}
-        className="bg-blue-500 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-600 transition"
+        className="bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700 transition"
       >
-        Add Blog
+        ➕ Add Blog
       </button>
 
       {chapter.blogs.map((blog, blogIndex) => (
         <div
           key={blogIndex}
-          className="bg-white rounded-xl shadow-md p-4 space-y-4 border border-gray-200"
+          className="bg-white rounded-xl shadow p-4 space-y-4 border border-gray-200"
         >
-          <h2 className="text-xl font-semibold text-gray-700">Blog {blogIndex + 1}</h2>
+          <h2 className="text-lg font-semibold text-gray-700">Blog {blogIndex + 1}</h2>
           {blog.heading.map((_, i) => (
-            <div key={i} className="flex flex-col md:flex-row md:space-x-4 space-y-2 md:space-y-0">
+            <div
+              key={i}
+              className="flex flex-col md:flex-row md:space-x-4 space-y-2 md:space-y-0"
+            >
               <input
                 type="text"
                 placeholder="Heading"
-                className="flex-1 p-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-300"
+                className="flex-1 p-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-400"
                 value={blog.heading[i]}
-                onChange={(e) => handleInputChange(blogIndex, "heading", e.target.value, i)}
+                onChange={(e) =>
+                  handleInputChange(blogIndex, "heading", e.target.value, i)
+                }
               />
               <input
                 type="text"
                 placeholder="Detail"
-                className="flex-1 p-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-300"
+                className="flex-1 p-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-400"
                 value={blog.detail[i]}
-                onChange={(e) => handleInputChange(blogIndex, "detail", e.target.value, i)}
+                onChange={(e) =>
+                  handleInputChange(blogIndex, "detail", e.target.value, i)
+                }
               />
               <button
                 onClick={() => removeField(blogIndex, i)}
@@ -158,7 +162,7 @@ const ChapterForm: React.FC = () => {
             onClick={() => addField(blogIndex)}
             className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition"
           >
-            Add Heading & Detail
+            ➕ Add Heading & Detail
           </button>
         </div>
       ))}
@@ -167,7 +171,7 @@ const ChapterForm: React.FC = () => {
         onClick={handleSubmit}
         className="bg-purple-600 text-white px-6 py-3 rounded-lg shadow-lg hover:bg-purple-700 transition w-full text-lg"
       >
-        Submit Chapter
+        ✅ Submit Chapter
       </button>
     </div>
   );
