@@ -49,7 +49,7 @@ export const AdminLogin: React.FC = () => {
       const data = await response.json();
       sessionStorage.setItem("token", data.token);
 
-      navigate("/"); //Smooth redirect to home page
+      navigate("/"); 
     } catch (err) {
       setError((err as Error).message);
     } finally {

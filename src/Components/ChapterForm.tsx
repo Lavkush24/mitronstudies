@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { BACKEND_URL } from "../config";
-import { div } from "framer-motion/client";
 
 interface Blog {
   heading: string[];

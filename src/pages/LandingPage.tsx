@@ -9,7 +9,6 @@ export function LandingPage() {
 
       <div className="flex justify-between items-center p-6">
         <Name name="Mitron Studies" />
-        {/* <NavBar /> */}
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-6 gap-8 px-10 md:px-20 py-16 items-center">

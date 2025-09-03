@@ -47,13 +47,11 @@ export function StudyListPage() {
 
   return (
     <div className="p-8 bg-gradient-to-br from-[#0f1115] to-[#1a1d25] min-h-screen">
-      {/* Header */}
       <div className="flex flex-row justify-between items-center text-4xl font-bold text-white mb-8">
         <div>All Study Subjects</div>
         <AddContent />
       </div>
 
-      {/* Loading/Error */}
       {loading && <p className="text-gray-400 text-3xl font-bold flex justify-center py-32">Loading subjects...</p>}
       {error && <p className="text-red-400">{error}</p>}
 

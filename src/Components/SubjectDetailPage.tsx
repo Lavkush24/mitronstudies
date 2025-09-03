@@ -78,7 +78,7 @@ export function SubjectDetailPage() {
         setChapters(arr);
         setStatus("loaded");
       } catch (e: any) {
-        if (e?.name === "AbortError") return; // ignore stale request
+        if (e?.name === "AbortError") return; 
         console.error(e);
         setErrMsg(e?.message ?? "Failed to load");
         setStatus("error");
@@ -90,7 +90,6 @@ export function SubjectDetailPage() {
 
   return (
     <div className="p-8 min-h-screen bg-gradient-to-br from-[#0f1115] to-[#1a1d25]">
-      {/* Header */}
       <div className="flex flex-row justify-between items-center mb-8">
         <h1 className="text-5xl font-bold text-gradient bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">
           Chapters
