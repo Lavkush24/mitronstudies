@@ -8,29 +8,37 @@ export function AddSubject() {
   const [details, setDetails] = useState("");
   const [pdfLink, setPdfLink] = useState("");
   const navigate = useNavigate();
+  const [loading,setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    const newContent = {
-      subjectName,
-      chapterName,
-      details,
-      pdfLink,
-    };
-
-    const token = sessionStorage.getItem("token");
-
-    await fetch(`${BACKEND_URL}/api/v1/subject/addsubject`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(newContent),
-    });
-
-    navigate("/");
+    setLoading(true);
+    try {
+      e.preventDefault();
+  
+      const newContent = {
+        subjectName,
+        chapterName,
+        details,
+        pdfLink,
+      };
+  
+      const token = sessionStorage.getItem("token");
+  
+      await fetch(`${BACKEND_URL}/api/v1/subject/addsubject`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(newContent),
+      });
+  
+      navigate("/study");
+    }catch (e){
+      return e;
+    }finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -83,7 +91,7 @@ export function AddSubject() {
             type="submit"
             className="mt-4 bg-gradient-to-r from-blue-500 to-purple-500 hover:from-purple-500 hover:to-blue-500 text-white font-bold py-3 sm:py-4 rounded-xl transition-all duration-300 shadow-lg hover:shadow-2xl"
           >
-            Save
+            {loading ? "Adding subject..." : "Add subject"}
           </button>
         </form>
       </div>

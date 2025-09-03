@@ -1,6 +1,12 @@
-export function Profile() {
+import { useNavigate } from "react-router-dom";
+
+export function Profile({nav}:{nav: string}) {
+  const navigate = useNavigate();
   return (
     <div
+      onClick={() => {
+        navigate(`/${nav}`);
+      }}
       className="relative h-36 w-36 rounded-full p-1 
                  bg-gradient-to-tr from-indigo-500 via-purple-500 to-pink-500 
                  bg-[length:200%_200%] animate-gradient

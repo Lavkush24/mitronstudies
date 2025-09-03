@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { BACKEND_URL } from "../config";
+import { div } from "framer-motion/client";
 
 interface Blog {
   heading: string[];
@@ -18,6 +19,7 @@ interface ChapterData {
 const ChapterForm: React.FC = () => {
   const navigate = useNavigate();
   const { subjectId } = useParams();
+  const [loading, setLoading] = useState(false);
 
   const [chapter, setChapter] = useState<ChapterData>({
     name: "",
@@ -67,7 +69,7 @@ const ChapterForm: React.FC = () => {
 
   const handleSubmit = async () => {
     const token = sessionStorage.getItem("token");
-
+    setLoading(true);
     try {
       const res = await fetch(`${BACKEND_URL}/api/v1/chapter/addchapter`, {
         method: "POST",
@@ -80,10 +82,12 @@ const ChapterForm: React.FC = () => {
 
       if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
       const data = await res.json();
-      navigate("/study");
+      navigate(`/study/${subjectId}`);
       return data;
     } catch (error) {
       return error;
+    }finally {
+      setLoading(false);
     }
   };
 
@@ -170,8 +174,8 @@ const ChapterForm: React.FC = () => {
       <button
         onClick={handleSubmit}
         className="bg-purple-600 text-white px-6 py-3 rounded-lg shadow-lg hover:bg-purple-700 transition w-full text-lg"
-      >
-        Submit Chapter
+      >  
+        { loading ? `Adding new ${chapter.name}...` : "Submit Chapter"}
       </button>
     </div>
   );

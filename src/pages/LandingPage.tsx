@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import { Aboutme } from "../Components/Aboutme";
 import { Name } from "../Components/Name";
-import { NavBar } from "../Components/NavBar";
 import { Profile } from "../Components/Profile";
 
 export function LandingPage() {
@@ -10,7 +9,7 @@ export function LandingPage() {
 
       <div className="flex justify-between items-center p-6">
         <Name name="Mitron Studies" />
-        <NavBar />
+        {/* <NavBar /> */}
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-6 gap-8 px-10 md:px-20 py-16 items-center">
@@ -28,7 +27,7 @@ export function LandingPage() {
         </div>
 
         <div className="flex justify-center items-center col-span-2">
-          <Profile />
+          <Profile nav={"admin"}/>
         </div>
       </div>
 
