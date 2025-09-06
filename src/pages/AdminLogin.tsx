@@ -47,9 +47,13 @@ export const AdminLogin: React.FC = () => {
       }
 
       const data = await response.json();
-      sessionStorage.setItem("token", data.token);
+      if(data.token) {
+        sessionStorage.setItem("token", data.token);
+        navigate("/"); 
+      }else {
+        alert(`${data.message}`);
+      }
 
-      navigate("/"); 
     } catch (err) {
       setError((err as Error).message);
     } finally {
