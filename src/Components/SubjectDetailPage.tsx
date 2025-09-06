@@ -131,7 +131,7 @@ export function SubjectDetailPage() {
                   </div>
 
                   <div className="flex flex-col justify-between">
-                    <button
+                    {token && <button
                       className="font-bold opacity-10 hover:opacity-100 hover:text-red-600"
                       onClick={async () => {
                         await fetch(`${BACKEND_URL}/api/v1/chapter/remove/${ch.id}`, {
@@ -143,6 +143,7 @@ export function SubjectDetailPage() {
                     >
                       Delete
                     </button>
+                    }
                     <button
                       className="font-bold opacity-10 hover:opacity-100 hover:text-blue-800"
                       onClick={() => navigate(`/${id}/${ch.name}/${ch.id}`)}
