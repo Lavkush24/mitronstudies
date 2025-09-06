@@ -23,7 +23,7 @@ export function SubjectListPage() {
       return (
         <Link
           to="/addsubject"
-          className="bg-gradient-to-r from-yellow-500 to-orange-400 hover:scale-105 transition-transform text-black font-semibold px-6 py-3 rounded-3xl shadow-lg"
+          className="bg-gradient-to-r from-yellow-500 to-orange-400 hover:scale-105 transition-transform text-black font-semibold px-6 py-3 rounded-3xl shadow-lg text-sm md:text-lg md:font-bold"
         >
           Add New Subject
         </Link>

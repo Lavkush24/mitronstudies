@@ -43,14 +43,14 @@ export function SubjectDetailPage() {
     token ? (
       <>
         <button
-          className="bg-gradient-to-r from-red-500 to-red-400 hover:scale-105 transition-transform text-black font-semibold px-6 py-3 rounded-3xl shadow-lg disabled:opacity-60 disabled:hover:scale-100"
+          className="bg-gradient-to-r from-red-500 to-red-400 hover:scale-105 transition-transform text-black font-semibold px-6 py-3 rounded-3xl shadow-lg disabled:opacity-60 disabled:hover:scale-100 text-sm md:text-lg h-12 pt-1 text-center"
           onClick={handleSubjectDelete}
           disabled={deletingSubject}
         >
           {deletingSubject ? "Deleting..." : "Delete subject"}
         </button>
         <Link
-          className="bg-gradient-to-r from-yellow-500 to-orange-400 hover:scale-105 transition-transform text-black font-semibold px-6 py-3 rounded-3xl shadow-lg"
+          className="bg-gradient-to-r from-yellow-500 to-orange-400 hover:scale-105 transition-transform text-black font-semibold px-6 py-3 rounded-3xl shadow-lg text-sm md:text-lg h-12 text-center pt-1"
           to={`/${id}/add-chapter`}
         >
           Add chapter
@@ -91,7 +91,7 @@ export function SubjectDetailPage() {
   return (
     <div className="p-8 min-h-screen bg-gradient-to-br from-[#0f1115] to-[#1a1d25]">
       <div className="flex flex-row justify-between items-center mb-8">
-        <h1 className="text-5xl font-bold text-gradient bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">
+        <h1 className="text-3xl font-bold text-gradient bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500 md:text-5xl">
           Chapters
         </h1>
         {addContent()}
