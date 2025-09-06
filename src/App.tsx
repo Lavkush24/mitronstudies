@@ -1,11 +1,8 @@
 import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
-// import { SkillViewPage } from "./pages/SkillViewPage";
 import { LandingPage } from "./pages/LandingPage";
-// import { SkillPage } from "./pages/SkillPage";
-// import { AddSkill } from "./pages/AddSkill";
 import { AddSubject } from "./Components/AddSubject";
 import { SubjectDetailPage } from "./Components/SubjectDetailPage";
-import { StudyListPage } from "./pages/StudyListpage";
+import { SubjectListPage } from "./pages/SubjectListPage";
 import { AdminLogin } from "./pages/AdminLogin";
 import ChapterBlog from "./Components/ChapterBlog";
 import ChapterForm from "./Components/ChapterForm";
@@ -37,9 +34,9 @@ function App() {
         <Route element={<Layout/>}>
           <Route path="/" element={<LandingPage/>}></Route>
           <Route path="/profile" element={<LandingPage/>}></Route>
-          <Route path="/addmaterial" element={<AddSubject />} />
+          <Route path="/addSubject" element={<AddSubject />} />
           <Route path="/study/:id" element={<SubjectDetailPage />} />
-          <Route path="/study" element={<StudyListPage></StudyListPage>} ></Route>
+          <Route path="/study" element={<SubjectListPage></SubjectListPage>} ></Route>
           <Route path="/admin" element={<AdminLogin></AdminLogin>} ></Route>
           <Route path="/:subjectId/:name/:id" element={<ChapterBlog></ChapterBlog>}></Route>
           <Route path="/:subjectId/add-chapter" element={<ChapterForm></ChapterForm>} ></Route>

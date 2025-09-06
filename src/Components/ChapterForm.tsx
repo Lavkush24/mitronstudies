@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { BACKEND_URL } from "../config";
+import AutoResizeTextarea from "./AutoResizeTextareaProps";
 
 interface Blog {
   heading: string[];
@@ -81,100 +82,103 @@ const ChapterForm: React.FC = () => {
 
       if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
       const data = await res.json();
-      navigate(`/study/${subjectId}`);
+      navigate(`/study`);
       return data;
     } catch (error) {
       return error;
-    }finally {
+    } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="max-w-4xl mx-auto p-6 space-y-6 font-sans">
-      <h1 className="text-3xl font-bold text-white">Add New Chapter</h1>
-
-      <div className="space-y-4">
+    <div className="flex flex-col w-full min-h-screen bg-gradient-to-br from-gray-900 via-[#1e293b] to-black text-red px-6 md:px-12 lg:px-20 py-10 space-y-8">
+      {/* Chapter Header Input */}
+      <header className="text-center md:text-left">
         <input
           type="text"
           placeholder="Chapter Name"
-          className="w-full p-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500"
+          className="w-full bg-transparent text-3xl sm:text-4xl md:text-5xl font-bold mb-2 text-yellow-400 placeholder-yellow-600 focus:outline-none"
           value={chapter.name}
           onChange={(e) => setChapter({ ...chapter, name: e.target.value })}
         />
-        <textarea
-          placeholder="Chapter Details"
-          className="w-full p-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500"
+        <AutoResizeTextarea
+          placeholder="Write chapter details..."
+          className="w-full bg-transparent text-base sm:text-lg text-gray-300 placeholder-gray-500 focus:outline-none resize-none"
           value={chapter.details}
           onChange={(e) => setChapter({ ...chapter, details: e.target.value })}
         />
         <input
           type="text"
-          placeholder="PDF Link"
-          className="w-full p-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500"
+          placeholder="PDF Link (optional)"
+          className="w-full bg-transparent text-sm sm:text-base text-yellow-400 underline placeholder-yellow-700 focus:outline-none mt-2"
           value={chapter.pdfLink}
           onChange={(e) => setChapter({ ...chapter, pdfLink: e.target.value })}
         />
+      </header>
+
+      {/* Blog Sections */}
+      <div className="space-y-8">
+        {chapter.blogs.map((blog, blogIndex) => (
+          <div
+            key={blogIndex}
+            className="bg-gray-800 rounded-2xl shadow-md p-6 space-y-6"
+          >
+            <h2 className="text-xl font-semibold text-gray-400">
+              Blog {blogIndex + 1}
+            </h2>
+
+            {blog.heading.map((_, i) => (
+              <div key={i} className="space-y-2">
+                <input
+                  type="text"
+                  placeholder="Blog Heading"
+                  className="w-full bg-transparent text-xl sm:text-2xl font-bold text-yellow-300 placeholder-yellow-600 focus:outline-none"
+                  value={blog.heading[i]}
+                  onChange={(e) =>
+                    handleInputChange(blogIndex, "heading", e.target.value, i)
+                  }
+                />
+                <AutoResizeTextarea
+                  placeholder="Write blog detail..."
+                  className="w-full bg-transparent text-base sm:text-lg text-gray-200 placeholder-gray-500 focus:outline-none resize-none"
+                  value={blog.detail[i]}
+                  onChange={(e) =>
+                    handleInputChange(blogIndex, "detail", e.target.value, i)
+                  }
+                />
+                <button
+                  onClick={() => removeField(blogIndex, i)}
+                  className="text-red-500 text-sm hover:text-red-400"
+                >
+                  Remove this section
+                </button>
+              </div>
+            ))}
+
+            <button
+              onClick={() => addField(blogIndex)}
+              className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition"
+            >
+              ➕ Add Heading & Detail
+            </button>
+          </div>
+        ))}
+
+        <button
+          onClick={addBlog}
+          className="bg-blue-600 text-white px-6 py-2 rounded-lg shadow hover:bg-blue-700 transition"
+        >
+          ➕ Add New Blog
+        </button>
       </div>
 
-      <button
-        onClick={addBlog}
-        className="bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700 transition"
-      >
-        ➕ Add Blog
-      </button>
-
-      {chapter.blogs.map((blog, blogIndex) => (
-        <div
-          key={blogIndex}
-          className="bg-white rounded-xl shadow p-4 space-y-4 border border-gray-200"
-        >
-          <h2 className="text-lg font-semibold text-gray-700">Blog {blogIndex + 1}</h2>
-          {blog.heading.map((_, i) => (
-            <div
-              key={i}
-              className="flex flex-col md:flex-row md:space-x-4 space-y-2 md:space-y-0"
-            >
-              <input
-                type="text"
-                placeholder="Heading"
-                className="flex-1 p-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-400"
-                value={blog.heading[i]}
-                onChange={(e) =>
-                  handleInputChange(blogIndex, "heading", e.target.value, i)
-                }
-              />
-              <input
-                type="text"
-                placeholder="Detail"
-                className="flex-1 p-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-400"
-                value={blog.detail[i]}
-                onChange={(e) =>
-                  handleInputChange(blogIndex, "detail", e.target.value, i)
-                }
-              />
-              <button
-                onClick={() => removeField(blogIndex, i)}
-                className="bg-red-500 text-white px-3 py-1 rounded-lg hover:bg-red-600 transition"
-              >
-                Remove
-              </button>
-            </div>
-          ))}
-          <button
-            onClick={() => addField(blogIndex)}
-            className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition"
-          >
-            ➕ Add Heading & Detail
-          </button>
-        </div>
-      ))}
-
+      {/* Submit Button */}
       <button
         onClick={handleSubmit}
-        className="bg-purple-600 text-white px-6 py-3 rounded-lg shadow-lg hover:bg-purple-700 transition w-full text-lg"
-      >  
-        { loading ? `Adding new ${chapter.name}...` : "Submit Chapter"}
+        className="bg-purple-600 text-white px-8 py-3 rounded-lg shadow-lg hover:bg-purple-700 transition w-full text-lg"
+      >
+        {loading ? `Adding new ${chapter.name}...` : "Submit Chapter"}
       </button>
     </div>
   );

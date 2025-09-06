@@ -83,7 +83,7 @@ export default function ChapterBlog() {
           {currentBlog.heading.map((h, idx) => (
             <div key={idx}>
               <h3 className="text-xl sm:text-2xl font-bold text-yellow-300 mb-2">{h}</h3>
-              <p className="text-base sm:text-lg text-gray-200">{currentBlog.detail[idx]}</p>
+              <p className="text-base sm:text-lg text-gray-200 whitespace-pre-wrap">{currentBlog.detail[idx]}</p>
             </div>
           ))}
         </div>

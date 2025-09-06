@@ -4,9 +4,7 @@ import { BACKEND_URL } from "../config";
 
 export function AddSubject() {
   const [subjectName, setSubjectName] = useState("");
-  const [chapterName, setChapterName] = useState("");
-  const [details, setDetails] = useState("");
-  const [pdfLink, setPdfLink] = useState("");
+  const [standard , setStandard] = useState("");
   const navigate = useNavigate();
   const [loading,setLoading] = useState(false);
 
@@ -17,14 +15,12 @@ export function AddSubject() {
   
       const newContent = {
         subjectName,
-        chapterName,
-        details,
-        pdfLink,
+        standard
       };
   
       const token = sessionStorage.getItem("token");
   
-      await fetch(`${BACKEND_URL}/api/v1/subject/addsubject`, {
+      const responce = await fetch(`${BACKEND_URL}/api/v1/subject/addsubject`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -32,8 +28,10 @@ export function AddSubject() {
         },
         body: JSON.stringify(newContent),
       });
+
+      const data = await responce.json();
   
-      navigate("/study");
+      navigate(`/${data.id}/add-chapter`);
     }catch (e){
       return e;
     }finally {
@@ -47,7 +45,7 @@ export function AddSubject() {
         <div className="absolute inset-0 rounded-3xl bg-gradient-to-tr from-blue-500 to-purple-500 opacity-20 blur-3xl pointer-events-none"></div>
 
         <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-6 tracking-wide text-center">
-          Add New Study Content
+          Add New Subject 
         </h2>
 
         <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
@@ -62,28 +60,10 @@ export function AddSubject() {
 
           <input
             type="text"
-            placeholder="Chapter Name"
-            value={chapterName}
-            onChange={(e) => setChapterName(e.target.value)}
-            className="p-3 sm:p-4 rounded-xl bg-gray-900/60 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-400 placeholder-gray-400"
-            required
-          />
-
-          <textarea
-            placeholder="Details"
-            value={details}
-            onChange={(e) => setDetails(e.target.value)}
-            rows={4}
-            className="p-3 sm:p-4 rounded-xl bg-gray-900/60 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-pink-400 placeholder-gray-400"
-            required
-          ></textarea>
-
-          <input
-            type="url"
-            placeholder="PDF Link"
-            value={pdfLink}
-            onChange={(e) => setPdfLink(e.target.value)}
-            className="p-3 sm:p-4 rounded-xl bg-gray-900/60 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-green-400 placeholder-gray-400"
+            placeholder="Standard"
+            value={standard}
+            onChange={(e) => setStandard(e.target.value)}
+            className="p-3 sm:p-4 rounded-xl bg-gray-900/60 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-400 placeholder-gray-400"
             required
           />
 

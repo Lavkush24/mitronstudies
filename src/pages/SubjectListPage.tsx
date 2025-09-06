@@ -5,9 +5,12 @@ import { BACKEND_URL } from "../config";
 interface Subject {
   id: number;
   name: string;
+  class: {
+    standard: string;
+  }
 }
 
-export function StudyListPage() {
+export function SubjectListPage() {
   const [subjects, setSubjects] = useState<Subject[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -19,10 +22,10 @@ export function StudyListPage() {
     if (token) {
       return (
         <Link
-          to="/addmaterial"
+          to="/addsubject"
           className="bg-gradient-to-r from-yellow-500 to-orange-400 hover:scale-105 transition-transform text-black font-semibold px-6 py-3 rounded-3xl shadow-lg"
         >
-          Add New Material
+          Add New Subject
         </Link>
       );
     }
@@ -35,6 +38,7 @@ export function StudyListPage() {
         const res = await fetch(`${BACKEND_URL}/api/v1/subject/all`);
         if (!res.ok) throw new Error("Failed to fetch subjects");
         const data = await res.json();
+        console.log(data);
         setSubjects(data.response || []);
       } catch (err: any) {
         setError(err.message || "Something went wrong");
@@ -74,6 +78,9 @@ export function StudyListPage() {
                   <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-blue-500 to-purple-500 opacity-10 blur-3xl pointer-events-none"></div>
                   <h2 className="text-2xl font-bold text-gradient bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">
                     {subject.name}
+                  </h2>
+                  <h2 className="text-2xl font-bold text-gradient bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">
+                    Standard: {subject.class.standard}
                   </h2>
                   <p className="text-gray-300 mt-2">Click to view chapters →</p>
                 </div>

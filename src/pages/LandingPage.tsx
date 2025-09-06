@@ -5,8 +5,7 @@ import { Profile } from "../Components/Profile";
 
 export function LandingPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-l from-blue-300 transition-all duration-700">
-
+    <div className="ps-32">
       <div className="flex justify-between items-center p-6">
         <Name name="Mitron Studies" />
       </div>
